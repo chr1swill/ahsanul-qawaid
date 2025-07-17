@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ahsanul Qawaid</title>
   <style>
-  *{ box-sizing: border-box; margin: 0px 0px; }
-  body{height:100%;width:100%;}
-  ul{}
-  li{}
-  p{}
+  *::before, *::after, *{ box-sizing: border-box; margin: 0px 0px; }
+  body, ul{height:100%;width:100%;}
+  body{gap: 8px 0px;}
+  ul{list-style-type: none; display: grid; grid-template-columns: repeat(10, 1fr); grid-auto-flow: row dense;}
+  li{cursor: pointer;}
+  p{font-size: 64px;}
   audio{}
   </style>
 </head>
@@ -17,19 +18,30 @@
 <h1>Ahsanul Qawaid</h1>
 <section id="11">
   <h2 id="11_title"></h2>
-  <ul id="11_letters"></ul>
+  <article>
+    <h3>Letters:</h3>
+    <ul id="11_letters"></ul>
+  </article>
+  <article>
+  <h3>Words:</h3>
   <ul id="11_words"></ul>
+  </article>
 </section>
 <section id="12">
   <h2 id="12_title"></h2>
-  <ul id="12_letters"></ul>
-  <ul id="12_words"></ul>
+  <article>
+    <h3>Letters:</h3>
+    <ul id="12_letters"></ul>
+  </article>
+  <article>
+    <h3>Words:</h3>
+    <ul id="12_words"></ul>
+  </article>
 </section>
 </ul>
 <script>
 const start = Date.now();
 const ara_alpha = "ابتثجحخدذرزسشصضطظعغفقكلمنهوءي";
-console.log(ara_alpha.length);
 
 function resolve_src(page_number, idx) {
   return  `/${page_number}/${ idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.mp3`;
@@ -69,7 +81,6 @@ pages.forEach(function(page) {
     df.appendChild(make_clickable_li_component(page.number, page.vowel, i, char));
     last_idx = i;
   }); 
-  // ++last_idx;
 
   document.getElementById(`${page.number}_letters`).appendChild(df); 
   df = undefined; 
