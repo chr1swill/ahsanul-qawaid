@@ -27,6 +27,7 @@
 </section>
 </ul>
 <script>
+const start = Date.now();
 const ara_alpha = "ابتثجحخدذرزسشصضطظعغفقكلمنهوءي";
 console.log(ara_alpha.length);
 
@@ -79,6 +80,8 @@ pages.forEach(function(page) {
   });
   document.getElementById(`${page.number}_words`).appendChild(df); 
 });
+const end = Date.now();
+console.log("rendered in %sms\n", (end - start));
 </script>
 </body>
 </html>
