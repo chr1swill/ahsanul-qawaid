@@ -3,42 +3,81 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>* { box-sizing: border-box; margin: 0px 0px; }</style>
+  <title>Ahsanul Qawaid</title>
+  <style>
+  *{ box-sizing: border-box; margin: 0px 0px; }
+  body{height:100%;width:100%;}
+  ul{}
+  li{}
+  p{}
+  audio{}
+  </style>
 </head>
-<title>Ahsanul Qawaid</title>
-</head>
-<body style="height:100%;width:100%">
+<body>
 <h1>Ahsanul Qawaid</h1>
-<h2>Page 11</h2>
-<ul id="holder">
+<section id="11">
+  <h2 id="11_title"></h2>
+  <ul id="11_letters"></ul>
+  <ul id="11_words"></ul>
+</section>
+<section id="12">
+  <h2 id="12_title"></h2>
+  <ul id="12_letters"></ul>
+  <ul id="12_words"></ul>
+</section>
 </ul>
 <script>
-console.assert(holder !== null, "where is the holder brother");
-const letters = 
-["اَ" ,"بَ","تَ","ثَ","جَ","حَ","خَ","دَ", "ذَ","رَ","زَ", "سَ", "شَ", "صَ", "ضَ", "طَ", "ظَ", "عَ", "غَ", "فَ", "قَ", "كَ", "لَ", "مَ","نَ","هَ", "وَ", "ءَ", "يَ", "اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ", "رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ", "كَسَبَ", "وَجَدَ"];
+const ara_alpha = "ابتثجحخدذرزسشصضطظعغفقكلمنهوءي";
+console.log(ara_alpha.length);
 
-console.log(letters.length);
+function resolve_src(page_number, idx) {
+  return  `/${page_number}/${ idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.mp3`;
+};
 
-holder.setAttribute("style", "display:grid; grid-template-columns: repeat(10, 1fr); width:100%; height:100%");
-
-letters.forEach(function(l, i) {
-  let li, audio, p;
-  li = document.createElement("li");
-  li.setAttribute("style", "width:50%; height:50%; display:flex; flex-direction:row; justify-content:center; align-items:center; cursor:pointer;");
+function make_clickable_li_component(page_number, page_vowel, idx, str) {
+  let li, p, audio;
 
   audio = document.createElement("audio");
-  audio.setAttribute("controls", "");
-  audio.setAttribute("style", "display: none");
-  audio.src = `/11/${(i+1) < 10 ? `0${i+1}.mp3` : `${i+1}.mp3`}`;
+  audio.src = resolve_src(page_number, idx);
 
   p = document.createElement("p");
-  p.textContent = letters[i];  
-  p.setAttribute("style", "font-size:64px");
+  p.textContent = 
+    page_vowel !== null ? str + page_vowel : str;
 
-  holder.appendChild(li).appendChild(p);
+  li = document.createElement("li");
+  li.onclick = function() { audio.play(); }
+
+  li.appendChild(p);
   li.appendChild(audio);
+  
+  return li;
+}
 
-  li.onclick = function () { li.querySelector("audio").play(); }
+const pages = [
+  {number: 11, vowel: "َ", words: ["اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ", "رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ", "كَسَبَ", "وَجَدَ"]},
+  {number: 12, vowel: "ِ", words: []},
+];
+
+pages.forEach(function(page) {
+  let last_idx, df;
+
+  document.getElementById(`${page.number}_title`).textContent = `Page ${page.number}`; 
+
+  df = new DocumentFragment();
+  ara_alpha.split("").forEach(function(char, i) {
+    df.appendChild(make_clickable_li_component(page.number, page.vowel, i, char));
+    last_idx = i;
+  }); 
+  // ++last_idx;
+
+  document.getElementById(`${page.number}_letters`).appendChild(df); 
+  df = undefined; 
+
+  df = new DocumentFragment();
+  page.words.forEach(function(word, i) {
+    df.appendChild(make_clickable_li_component(page.number, null, last_idx + i + 1, word));
+  });
+  document.getElementById(`${page.number}_words`).appendChild(df); 
 });
 </script>
 </body>
