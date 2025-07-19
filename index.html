@@ -94,14 +94,18 @@ pages.forEach(function(page) {
     last_idx = i;
   }); 
 
-  document.getElementById(`${page.number}_letters`).appendChild(df); 
+  document.getElementById(`${page.number}_letters`).appendChild(df);
   df = undefined; 
 
   df = new DocumentFragment();
-  page.words.forEach(function(word, i) {
-    df.appendChild(make_clickable_li_component(page.number, null, last_idx + i + 1, word));
-  });
-  document.getElementById(`${page.number}_words`).appendChild(df); 
+  if (page.words.length > 0) {
+    page.words
+    .forEach(function(word, i) {
+      df.appendChild(
+        make_clickable_li_component(page.number, null, last_idx + i + 1, word));
+    });
+    document.getElementById(`${page.number}_words`).appendChild(df); 
+  }
 });
 const end = Date.now();
 console.log("rendered in %sms\n", (end - start));
