@@ -52,10 +52,11 @@
 </ul>
 <script>
 const start = Date.now();
+const DEBUG = 1;
 const ara_alpha = "ابتثجحخدذرزسشصضطظعغفقكلمنهوءي";
 
 function resolve_src(page_number, idx) {
-  return  `/audio/${page_number}/${ idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.mp3`;
+  return  `${DEBUG === 1 ? "" : "https://github.com/chr1swill/ahsanul-qawaid/raw/refs/heads/main"}/audio/${page_number}/${ idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.mp3`;
 };
 
 function make_clickable_li_component(page_number, page_vowel, idx, str) {
