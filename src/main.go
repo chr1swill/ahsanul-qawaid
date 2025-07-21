@@ -16,6 +16,14 @@ func blowup_if_present(err error) {
 	if err != nil { panic(err); }
 }
 
+type Section struct {
+	Words 	[]string
+	Letters []string
+	Vowel 	string
+	Name 		string
+	Title 	string
+}
+
 func main() {
 	var err error;
 	var mux *http.ServeMux;
