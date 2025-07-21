@@ -32,9 +32,6 @@
         <p>{{ $v }}</p>
         {{ end }}
 
-        <!--return  `${DEBUG !== 1 ? "" :
-          "https://github.com/chr1swill/ahsanul-qawaid/raw/refs/heads/main"}/audio/${page_number}/${ idx + 1 < 10 ?
-          `0${idx + 1}` : idx + 1}.mp3`;-->
         {{ $idx := Add $i 1 }}
         {{ if lt $idx 10 }}
         <audio src='{{ printf "/audio/%s/0%d.mp3" $name $idx }}'></audio>
@@ -71,89 +68,6 @@
   {{ end }}
 </section>
 {{ end }}
-<!--<section id="11">
-  <h2 id="11_title"></h2>
-  <article>
-    <h3>Letters:</h3>
-    <ul id="11_letters"></ul>
-  </article>
-  <article>
-  <h3>Words:</h3>
-  <ul id="11_words"></ul>
-  </article>
-</section>
-<section id="12">
-  <h2 id="12_title"></h2>
-  <article>
-    <h3>Letters:</h3>
-    <ul id="12_letters"></ul>
-  </article>
-  <article>
-    <h3>Words:</h3>
-    <ul id="12_words"></ul>
-  </article>
-</section>-->
-<!-- <script>
-const start = Date.now();
-const DEBUG = 0;
-const ara_alpha = "ابتثجحخدذرزسشصضطظعغفقكلمنهوءي";
-
-function resolve_src(page_number, idx) {
-  return  `${DEBUG !== 1 ? "" : "https://github.com/chr1swill/ahsanul-qawaid/raw/refs/heads/main"}/audio/${page_number}/${ idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.mp3`;
-};
-
-function make_clickable_li_component(page_number, page_vowel, idx, str) {
-  let li, p, audio;
-
-  audio = document.createElement("audio");
-  audio.src = resolve_src(page_number, idx);
-
-  p = document.createElement("p");
-  p.textContent = 
-    page_vowel !== null ? str + page_vowel : str;
-
-  li = document.createElement("li");
-  li.onclick = function() { audio.play(); }
-
-  li.appendChild(p);
-  li.appendChild(audio);
-  
-  return li;
-}
-
-const pages = [
-  {number: 1, vowel: "", words: []},
-  {number: 11, vowel: "َ", words: ["اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ", "رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ", "كَسَبَ", "وَجَدَ"]},
-  {number: 12, vowel: "ِ", words: ["اَذِنَ", "بَقِيَ", "حَمِدَ", "خَشِيَ", "سَخِرَ", "شَرِبَ", "عَجِبَ", "غَضِبَ", "كَذِبَ", "بَخِلَ", "فَلِمَ", "يَءِسَ", "اَبَتِ", "بَلَدِ", "مَلِكِ", "حَطَبِ", "اِبِلِ", "كِبَرِ", "عَلِمَ", "اِرَمَ"]},
-];
-
-pages.forEach(function(page) {
-  let last_idx, df;
-
-  document.getElementById(`${page.number}_title`).textContent = `Page ${page.number}`; 
-
-  df = new DocumentFragment();
-  ara_alpha.split("").forEach(function(char, i) {
-    df.appendChild(make_clickable_li_component(page.number, page.vowel, i, char));
-    last_idx = i;
-  }); 
-
-  document.getElementById(`${page.number}_letters`).appendChild(df);
-  df = undefined; 
-
-  df = new DocumentFragment();
-  if (page.words.length > 0) {
-    page.words
-    .forEach(function(word, i) {
-      df.appendChild(
-        make_clickable_li_component(page.number, null, last_idx + i + 1, word));
-    });
-    document.getElementById(`${page.number}_words`).appendChild(df); 
-  }
-});
-const end = Date.now();
-console.log("rendered in %sms\n", (end - start));
-</script>-->
 <script>
   document.body.onclick = function (e) {
     let el, audio;el=e.target;
