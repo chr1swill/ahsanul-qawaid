@@ -2,7 +2,7 @@ package main
 
 import  (
 	"net/http"
-	"os"
+	"html/template"
 )
 // my limits are the ammount of data i can store on the server (10GB)
 // the badwidth of the server (1GB/s)
@@ -17,17 +17,17 @@ func blowup_if_present(err error) {
 }
 
 func main() {
-	var mux *http.ServeMux;
 	var err error;
-	var b []byte;
+	var mux *http.ServeMux;
+	var t *template.Template;
 
-	b, err = os.ReadFile("index.html");
-	blowup_if_present(err);
+	t = template.Must(template.ParseFiles("index.html"));
 
 	mux = http.NewServeMux();
 
 	mux.Handle("/audio/",
-	http.StripPrefix("/audio/", http.FileServer(http.Dir("audio"))));
+		http.StripPrefix("/audio/",
+			http.FileServer(http.Dir("audio"))));
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
@@ -35,7 +35,7 @@ func main() {
 			"Method not allowed", http.StatusMethodNotAllowed);
 		}
 
-		_, err = w.Write(b);
+		t.Execute(w, nil);
 		if err != nil {
 			http.Error(w,
 			"Internal Server Error", http.StatusInternalServerError);
