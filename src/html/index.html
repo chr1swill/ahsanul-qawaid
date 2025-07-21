@@ -16,58 +16,61 @@
 </head>
 <body>
 <h1>Ahsanul Qawaid</h1>
-{{ range . }}
-<section id="{{ .Name }}">
-  <h2 id="{{ .Name }}_title">Page {{ .Name }}</h2>
+{{- range . -}}
+<section id="{{- .Name -}}">
+  <h2 id="{{- .Name -}}_title">Page {{- .Name -}}</h2>
   <article>
     <h3>Letters:</h3>
-    <ul id="{{ .Name }}_letters">
-      {{ $vowel := .Vowel }}
-      {{ $name := .Name }}
-      {{ range $i, $v := .Letters }}
-      <li>
-        {{ if $vowel }}
-        <p>{{ printf "%s%s" $v $vowel }}</p>
-        {{ else }}
-        <p>{{ $v }}</p>
-        {{ end }}
+    <ul id="{{- .Name -}}_letters">
+      {{- $vowel := .Vowel -}}
+      {{- $name := .Name -}}
 
-        {{ $idx := Add $i 1 }}
-        {{ if lt $idx 10 }}
-        <audio src='{{ printf "/audio/%s/0%d.mp3" $name $idx }}'></audio>
-        {{ else }}
-        <audio src='{{ printf "/audio/%s/%d.mp3" $name $idx }}'></audio>
-        {{ end }}
+      {{- range $i, $v := .Letters -}}
+      <li>
+        {{- if $vowel -}}
+        <p>{{- printf "%s%s" $v $vowel -}}</p>
+        {{- else -}}
+        <p>{{- $v -}}</p>
+        {{- end -}}
+
+        {{- $idx := Add $i 1 -}}
+        {{- if lt $idx 10 -}}
+        <audio src='{{- printf "/audio/%s/0%d.mp3" $name $idx -}}'></audio>
+        {{- else -}}
+        <audio src='{{- printf "/audio/%s/%d.mp3" $name $idx -}}'></audio>
+        {{- end -}}
       </li>
-      {{ end }}
+      {{- end -}}
     </ul>
   </article>
-  {{ if .Words }}
+  {{- if .Words -}}
   <article>
     <h3>Words:</h3>
-    <ul id="{{ .Name }}_words">
-      {{ range $i, $v := .Words }}
-      <li>
-        {{ if .Vowel }}
-        <p>{{ printf "%s%s" $v .Vowel }}</p>
-        {{ else }}
-        <p>{{ $v }}</p>
-        {{ end }}
+    <ul id="{{- .Name -}}_words">
+      {{- $vowel := .Vowel -}}
+      {{- $name := .Name -}}
 
-        {{ $idx := Add $i 1 }}
-        {{ if $idx lt 10 }}
-        <audio src='{{ printf "/audio/%s/0%d" .Name $idx }}'></audio>
-        {{ else }}
-        <audio src='{{ printf "/audio/%s/%d" .Name $idx }}'></audio>
-        {{ end }}
+      {{- range $i, $v := .Words -}}
+      <li>
+        {{- if $vowel -}}
+        <p>{{- printf "%s%s" $v $vowel -}}</p>
+        {{- else -}}
+        <p>{{- $v -}}</p>
+        {{- end -}}
+
+        {{- $idx := Add $i 1 -}}
+        {{-  if lt $idx 10 -}}
+        <audio src='{{- printf "/audio/%s/0%d" $name $idx -}}'></audio>
+        {{- else -}}
+        <audio src='{{- printf "/audio/%s/%d" $name $idx -}}'></audio>
+        {{- end -}}
       </li>
-      {{ end }}
+      {{- end -}}
     </ul>
   </article>
-  {{ else }}
-  {{ end }}
+  {{- end -}}
 </section>
-{{ end }}
+{{- end -}}
 <script>
   document.body.onclick = function (e) {
     let el, audio;el=e.target;
