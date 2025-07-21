@@ -1,7 +1,7 @@
 package main
 
 import  (
-  "os"
+  "net/http"
 	"html/template"
 )
 // hello
@@ -28,8 +28,8 @@ type Section struct {
 
 func main() {
 	var err error;
-	//var mux *http.ServeMux;
-	//var t *template.Template;
+	var mux *http.ServeMux;
+	var t *template.Template;
 	var sections []Section;
 
 	sections = append(sections, 
@@ -39,37 +39,37 @@ func main() {
     Words: []string{"اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ",
     "رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ",
     "كَسَبَ", "وَجَدَ"}});
-	sections = append(sections, 
-		Section{Letters: ARA_ALPHA, Name: "11", Vowel: "َ",
+  sections = append(sections, 
+		Section{Letters: ARA_ALPHA, Name: "12", Vowel: "ِ",
     Words: []string{"اَذِنَ", "بَقِيَ", "حَمِدَ", "خَشِيَ", "سَخِرَ", "شَرِبَ",
     "عَجِبَ", "غَضِبَ", "كَذِبَ", "بَخِلَ", "فَلِمَ", "يَءِسَ", "اَبَتِ",
     "بَلَدِ", "مَلِكِ", "حَطَبِ", "اِبِلِ", "كِبَرِ", "عَلِمَ", "اِرَمَ"}});
 
-	err = template.Must(template.New("index.html").Funcs(template.FuncMap{
+	t = template.Must(template.New("index.html").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b }, 
-	}).ParseFiles("src/html/index.html")).Execute(os.Stdout, sections);
+	}).ParseFiles("src/html/index.html"));
   blowup_if_present(err);
 
-	// mux = http.NewServeMux();
+	 mux = http.NewServeMux();
 
-	// mux.Handle("/audio/",
-	// 	http.StripPrefix("/audio/",
-	// 		http.FileServer(http.Dir("audio"))));
+	 mux.Handle("/audio/",
+	 	http.StripPrefix("/audio/",
+	 		http.FileServer(http.Dir("audio"))));
 
-	// mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	if r.Method != http.MethodGet {
-	// 		http.Error(w,
-	// 		"Method not allowed", http.StatusMethodNotAllowed);
-	// 	}
+	 mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	 	if r.Method != http.MethodGet {
+	 		http.Error(w,
+	 		"Method not allowed", http.StatusMethodNotAllowed);
+	 	}
 
-	// 	err = t.Execute(w, sections);
-	// 	if err != nil {
-	// 		http.Error(w,
-	// 		"Internal Server Error", http.StatusInternalServerError);
-	// 	}
-	// });
+	 	err = t.Execute(w, sections);
+	 	if err != nil {
+	 		http.Error(w,
+	 		"Internal Server Error", http.StatusInternalServerError);
+	 	}
+	 });
 
-	// print("server running on port", PORT);
-	// err = http.ListenAndServe(PORT, mux);
-	// blowup_if_present(err);
+	 print("server running on port", PORT);
+	 err = http.ListenAndServe(PORT, mux);
+	 blowup_if_present(err);
 }

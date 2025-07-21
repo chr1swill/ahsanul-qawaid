@@ -9,7 +9,7 @@
   html, body, ul{height:100%;width:100%;}
   body{gap: 8px 0px;}
   ul{direction: rtl; list-style-type: none; display: grid; grid-template-columns: repeat(10, 1fr); grid-auto-flow: row dense;}
-  li{cursor: pointer;}
+  li{cursor: pointer;display:flex;justify-content:center;align-items:center}
   p{font-size: 64px;}
   audio{}
   </style>
@@ -24,7 +24,7 @@
     <ul id="{{- .Name -}}_letters">
       {{- $vowel := .Vowel -}}
       {{- $name := .Name -}}
-
+      {{- $last := 0 -}}
       {{- range $i, $v := .Letters -}}
       <li>
         {{- if $vowel -}}
@@ -40,29 +40,26 @@
         <audio src='{{- printf "/audio/%s/%d.mp3" $name $idx -}}'></audio>
         {{- end -}}
       </li>
+      {{- $last = $i -}}
       {{- end -}}
     </ul>
   </article>
   {{- if .Words -}}
+  {{- $last = Add $last 1 -}}
   <article>
     <h3>Words:</h3>
     <ul id="{{- .Name -}}_words">
-      {{- $vowel := .Vowel -}}
       {{- $name := .Name -}}
 
       {{- range $i, $v := .Words -}}
       <li>
-        {{- if $vowel -}}
-        <p>{{- printf "%s%s" $v $vowel -}}</p>
-        {{- else -}}
         <p>{{- $v -}}</p>
-        {{- end -}}
-
         {{- $idx := Add $i 1 -}}
+        {{- $idx := Add $last $idx -}}
         {{-  if lt $idx 10 -}}
-        <audio src='{{- printf "/audio/%s/0%d" $name $idx -}}'></audio>
+        <audio src='{{- printf "/audio/%s/0%d.mp3" $name $idx -}}'></audio>
         {{- else -}}
-        <audio src='{{- printf "/audio/%s/%d" $name $idx -}}'></audio>
+        <audio src='{{- printf "/audio/%s/%d.mp3" $name $idx -}}'></audio>
         {{- end -}}
       </li>
       {{- end -}}
