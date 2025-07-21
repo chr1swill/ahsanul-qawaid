@@ -1,10 +1,10 @@
 package main
 
 import  (
-	//"net/http"
+  "net/http"
 	"html/template"
-	"os"
 )
+// hello
 // my limits are the ammount of data i can store on the server (10GB)
 // the badwidth of the server (1GB/s)
 // the ammount of memeory I can use (1GB)
@@ -28,39 +28,42 @@ type Section struct {
 
 func main() {
 	var err error;
-	// var mux *http.ServeMux;
+	var mux *http.ServeMux;
 	var t *template.Template;
 	var sections []Section;
 
 	t = template.Must(template.New("index.html").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b }, 
-	}).ParseFiles("index.html"));
+	}).ParseFiles("src/html/index.html"));
 
-	sections = append(sections, Section{Letters: ARA_ALPHA, Name: "1", Vowel: ""});
+	sections = append(sections, 
+		Section{Letters: ARA_ALPHA, Name: "1", Vowel: ""});
+	// sections = append(sections, 
+	// 	Section{Letters: ARA_ALPHA, Name: "11", Vowel: ""});
 
-	err = t.Execute(os.Stdout, sections);
-	blowup_if_present(err);
-
-	// mux = http.NewServeMux();
-
-	// mux.Handle("/audio/",
-	// 	http.StripPrefix("/audio/",
-	// 		http.FileServer(http.Dir("audio"))));
-
-	// mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	if r.Method != http.MethodGet {
-	// 		http.Error(w,
-	// 		"Method not allowed", http.StatusMethodNotAllowed);
-	// 	}
-
-	// 	t.Execute(w, nil);
-	// 	if err != nil {
-	// 		http.Error(w,
-	// 		"Internal Server Error", http.StatusInternalServerError);
-	// 	}
-	// });
-
-	// print("server running on port", PORT);
-	// err = http.ListenAndServe(PORT, mux);
+	// err = t.Execute(os.Stdout, sections);
 	// blowup_if_present(err);
+
+	mux = http.NewServeMux();
+
+	mux.Handle("/audio/",
+		http.StripPrefix("/audio/",
+			http.FileServer(http.Dir("audio"))));
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w,
+			"Method not allowed", http.StatusMethodNotAllowed);
+		}
+
+		err = t.Execute(w, sections);
+		if err != nil {
+			http.Error(w,
+			"Internal Server Error", http.StatusInternalServerError);
+		}
+	});
+
+	print("server running on port", PORT);
+	err = http.ListenAndServe(PORT, mux);
+	blowup_if_present(err);
 }

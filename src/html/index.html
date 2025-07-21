@@ -154,5 +154,14 @@ pages.forEach(function(page) {
 const end = Date.now();
 console.log("rendered in %sms\n", (end - start));
 </script>-->
+<script>
+  document.body.onclick = function (e) {
+    let el, audio;el=e.target;
+    if (el.tagName !== "P") return;
+    audio=el.nextElementSibling;
+    console.assert(audio.tagName = "AUDIO");
+    audio.play();
+  };
+</script>
 </body>
 </html>
