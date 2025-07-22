@@ -42,6 +42,9 @@ func main() {
     Words: []string{"اَذِنَ", "بَقِيَ", "حَمِدَ", "خَشِيَ", "سَخِرَ", "شَرِبَ",
     "عَجِبَ", "غَضِبَ", "كَذِبَ", "بَخِلَ", "فَلِمَ", "يَءِسَ", "اَبَتِ",
     "بَلَدِ", "مَلِكِ", "حَطَبِ", "اِبِلِ", "كِبَرِ", "عَلِمَ", "اِرَمَ"}});
+  sections = append(sections,
+    Section{Letters: ARA_ALPHA, Name: "13", Vowel: "ُ",
+    Words: []string{}});
 
 	t = template.Must(template.New("index.html").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b }, 
