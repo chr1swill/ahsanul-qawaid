@@ -18,7 +18,7 @@
 <h1>Ahsanul Qawaid</h1>
 {{- range . -}}
 <section id="{{- .Name -}}">
-  <h2 id="{{- .Name -}}_title">Page {{- .Name -}}</h2>
+  <h2 id="{{- .Name -}}_title">Page {{ .Name -}}</h2>
   {{- $last := 0 -}}
   {{- if .Letters -}}
   <article>
