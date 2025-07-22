@@ -19,12 +19,13 @@
 {{- range . -}}
 <section id="{{- .Name -}}">
   <h2 id="{{- .Name -}}_title">Page {{- .Name -}}</h2>
+  {{- $last := 0 -}}
+  {{- if .Letters -}}
   <article>
     <h3>Letters:</h3>
     <ul id="{{- .Name -}}_letters">
       {{- $vowel := .Vowel -}}
       {{- $name := .Name -}}
-      {{- $last := 0 -}}
       {{- range $i, $v := .Letters -}}
       <li>
         {{- if $vowel -}}
@@ -44,13 +45,15 @@
       {{- end -}}
     </ul>
   </article>
-  {{- if .Words -}}
   {{- $last = Add $last 1 -}}
+  {{- else -}}
+  {{- end -}}
+
+  {{- if .Words -}}
   <article>
     <h3>Words:</h3>
     <ul id="{{- .Name -}}_words">
       {{- $name := .Name -}}
-
       {{- range $i, $v := .Words -}}
       <li>
         <p>{{- $v -}}</p>
