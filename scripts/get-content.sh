@@ -40,13 +40,13 @@ fi
 # to not waste time with unnessary requests
 for (( i=1; i<100; ++i ));
 do
-  local file;
+  file=""
 
   if [ "$i" -lt "10" ];
   then
-    file="_0${page_number}"
+    file="_0${i}"
   else
-    file="_${page_number}"
+    file="_${i}"
   fi
 
   curl "${website}${page_path}${file}.mp3" -o "${page_dir}${i}.mp3" &
