@@ -6,14 +6,20 @@ So thank you Fadheelatush-Sheikh and Shamsuddin Barodwi for the excellent resour
 
 ## Tools
 
-The only thing need to get this up and running is a modern web browser and some way to create a server locally. I use python3 but use whatever floats you boat.
+All you need is the [golang compiler](https://go.dev/) and a web browser that supports javascript
 
 ## Usage
 
-Start your server in the root of this project:
+Super simple just execute the build script it will handle everything for you
 
 ```bash
-python3 -m http.server 8080
+./build.sh
+```
+
+Then start your server in the root of this project:
+
+```bash
+./bin/main
 ```
 
 Then go open [localhost:8080](http://localhost:8080) in you browser. That's it.
