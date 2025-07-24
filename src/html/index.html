@@ -8,9 +8,12 @@
   *::before, *::after, *{ box-sizing: border-box; margin: 0px 0px; }
   html, body, ul{height:100%;width:100%;}
   body{gap: 8px 0px; background-color: black; color: gray;}
+  {{- $VISIBILILY_ATTR := "_visible" -}}
+  section:not([{{- $VISIBILILY_ATTR -}}]){display: none}
   ul{direction: rtl; list-style-type: none; display: grid; grid-template-columns: repeat(10, 1fr); grid-auto-flow: row dense;}
-  li{cursor: pointer;display:flex;justify-content:center;align-items:center}
-  button{all: unset;font-size: 64px;}
+  li, nav{display:flex;justify-content:center;align-items:center}
+  nav{gap: 32px;}
+  button{all: unset;cursor: pointer;font-size: 64px;}
   button:focus-visible{border: 1px solid gray;}
   audio{}
   </style>
@@ -72,14 +75,78 @@
   {{- end -}}
 </section>
 {{- end -}}
+<nav><button id="nav_back">Back</button><button id="nav_next">Next</button></nav>
 <script>
+  let section_idx;
+  const LS_KEY = "SECTION_STATE";
+  const VISIBILILY_ATTR = {{- $VISIBILILY_ATTR -}};
+  const PAGE_IDX_MIN = 0;
+  const PAGE_IDX_MAX = {{- len . -}} - 1;
+  const page_ids = [ {{- range . -}}{{- .Name -}},{{- end -}} ];
+
+  function update_sections_in_dom(section_idx) {
+    let last, cur;
+
+    console.log(section_idx);
+    console.assert(section_idx !== null && section_idx !== undefined);
+    console.assert(typeof section_idx === 'number');
+
+    last = document.body.querySelector(`section[${VISIBILILY_ATTR}]`);
+    cur = document.getElementById(page_ids[section_idx]);
+    if (last !== null) last.removeAttribute(VISIBILILY_ATTR);
+    cur.setAttribute(VISIBILILY_ATTR, "");
+  }
+
+  function page_ids_get_idx_after_command(section_idx, command) {
+    if (section_idx === null ||
+       section_idx === undefined) {
+       return PAGE_IDX_MIN;
+    }
+
+    switch (command) {
+      case "nav_back":
+        if (section_idx - 1 < PAGE_IDX_MIN)
+          return PAGE_IDX_MAX;
+        else
+          return section_idx - 1;
+        break;
+      case "nav_next":
+        if (section_idx + 1 > PAGE_IDX_MAX)
+          return PAGE_IDX_MIN;
+        else
+          return section_idx + 1;
+        break;
+      default:
+        console.debug("should never ever happen");
+        return PAGE_IDX_MIN;
+        break;
+    }
+  }
+
+  section_idx = window.localStorage.getItem(LS_KEY);
+  if (section_idx === null) {
+    section_idx = PAGE_IDX_MIN;
+    window.localStorage.setItem(LS_KEY, section_idx);
+  }
+  update_sections_in_dom(window.parseInt(section_idx));
+
   document.body.onclick = function (e) {
     let el, audio;el=e.target;
     if (el.tagName !== "BUTTON") return;
-    audio=el.nextElementSibling;
-    console.assert(audio.tagName = "AUDIO");
-    audio.play();
-  };
+    if (el.parentElement.tagName !== "NAV") {
+      audio=el.nextElementSibling;
+      console.assert(audio.tagName = "AUDIO");
+      audio.play();
+    } else {
+      section_idx = window.parseInt(window.localStorage.getItem(LS_KEY));
+      console.assert(typeof section_idx === "number");
+      section_idx = page_ids_get_idx_after_command(section_idx, el.id);
+      console.assert(typeof section_idx === "number");
+
+      update_sections_in_dom(section_idx);
+      window.localStorage.setItem(LS_KEY, section_idx);
+    }
+  }
 </script>
 </body>
 </html>
