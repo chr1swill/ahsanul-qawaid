@@ -57,29 +57,29 @@ func main() {
     "عَدَلَكَ", "خَلَقَكَ", "بِيَدِكَ" }});
 
   t = template.Must(template.New("index.html").Funcs(template.FuncMap{
-		"Add": func (a, b int) int { return a + b }, 
-	}).ParseFiles("src/html/index.html"));
+        "Add": func (a, b int) int { return a + b },
+        }).ParseFiles("src/html/index.html"));
 
-	 mux = http.NewServeMux();
+  mux = http.NewServeMux();
 
-	 mux.Handle("/audio/",
-	 	http.StripPrefix("/audio/",
-	 		http.FileServer(http.Dir("audio"))));
+  mux.Handle("/audio/",
+      http.StripPrefix("/audio/",
+        http.FileServer(http.Dir("audio"))));
 
-	 mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	 	if r.Method != http.MethodGet {
-	 		http.Error(w,
-	 		"Method not allowed", http.StatusMethodNotAllowed);
-	 	}
+  mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+      http.Error(w,
+          "Method not allowed", http.StatusMethodNotAllowed);
+    }
 
-	 	err = t.Execute(w, sections);
-	 	if err != nil {
-	 		http.Error(w,
-	 		"Internal Server Error", http.StatusInternalServerError);
-	 	}
-	 });
+    err = t.Execute(w, sections);
+    if err != nil {
+      http.Error(w,
+          "Internal Server Error", http.StatusInternalServerError);
+    }
+  });
 
-	 print("server running on port", PORT);
-	 err = http.ListenAndServe(PORT, mux);
-	 blowup_if_present(err);
+  print("server running on port", PORT);
+  err = http.ListenAndServe(PORT, mux);
+  blowup_if_present(err);
 }
