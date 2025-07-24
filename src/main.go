@@ -59,7 +59,6 @@ func main() {
   t = template.Must(template.New("index.html").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b }, 
 	}).ParseFiles("src/html/index.html"));
-  blowup_if_present(err);
 
 	 mux = http.NewServeMux();
 
