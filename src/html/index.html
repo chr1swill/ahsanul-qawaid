@@ -87,7 +87,6 @@
   function update_sections_in_dom(section_idx) {
     let last, cur;
 
-    console.log(section_idx);
     console.assert(section_idx !== null && section_idx !== undefined);
     console.assert(typeof section_idx === 'number');
 
@@ -145,6 +144,33 @@
 
       update_sections_in_dom(section_idx);
       window.localStorage.setItem(LS_KEY, section_idx);
+    }
+  }
+
+  const enum_keys = Object.freeze({
+    down: "ArrowDown", up: "ArrowUp",
+    left: "ArrowLeft", right: "ArrowRight"});
+  const focus_options = Object.freeze({ focusVisible: true,
+      preventScroll: true });
+
+  document.body.onkeydown = function (e) {
+    switch(e.key) {
+      case enum_keys.down:
+      case enum_keys.up: 
+	console.log(e.key);
+      break;
+      case enum_keys.right:
+	e.target
+	  .parentElement
+	  .nextElementSibling
+	  .firstElementChild.focus(focus_options);
+	break;
+      case enum_keys.left:
+	e.target
+	  .parentElement
+	  .previousElementSibling
+	  .firstElementChild.focus(focus_options);
+	break;
     }
   }
 </script>
