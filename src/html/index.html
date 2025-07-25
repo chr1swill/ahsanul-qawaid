@@ -154,22 +154,43 @@
       preventScroll: true });
 
   document.body.onkeydown = function (e) {
+    if (e.target.tagName !== "BUTTON") {
+
+      console.assert(e.target.tagName === "BODY");
+      e.target
+      .querySelector(`section[${VISIBILILY_ATTR}] li:first-of-type button`)
+      .focus(focus_options);
+      return;
+    }
+
+    let check; 
     switch(e.key) {
       case enum_keys.down:
       case enum_keys.up: 
 	console.log(e.key);
       break;
       case enum_keys.right:
-	e.target
-	  .parentElement
-	  .nextElementSibling
-	  .firstElementChild.focus(focus_options);
+	check = e.target
+	  .parentElement.nextElementSibling;
+	if (check !== null) {
+	  check.firstElementChild.focus(focus_options);
+	} else {
+	  document.body
+	  .querySelector(`section[${VISIBILILY_ATTR}] li:first-of-type button`)
+	  .focus(focus_options);
+	}
 	break;
       case enum_keys.left:
-	e.target
-	  .parentElement
-	  .previousElementSibling
-	  .firstElementChild.focus(focus_options);
+      check = e.target
+	.parentElement
+	.previousElementSibling;
+	if (check !== null) {
+	  check.firstElementChild.focus(focus_options);
+	} else {
+	  document.body
+	  .querySelector(`section[${VISIBILILY_ATTR}] li:last-of-type button`)
+	  .focus(focus_options);
+	}
 	break;
     }
   }
