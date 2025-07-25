@@ -150,12 +150,11 @@
   const enum_keys = Object.freeze({
     down: "ArrowDown", up: "ArrowUp",
     left: "ArrowLeft", right: "ArrowRight"});
-  const focus_options = Object.freeze({ focusVisible: true,
-      preventScroll: true });
+  const focus_options = Object.freeze({
+    focusVisible: true, preventScroll: true });
 
   document.body.onkeydown = function (e) {
     if (e.target.tagName !== "BUTTON") {
-
       console.assert(e.target.tagName === "BODY");
       e.target
       .querySelector(`section[${VISIBILILY_ATTR}] li:first-of-type button`)
