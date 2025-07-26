@@ -41,15 +41,29 @@ fi
 for (( i=1; i<100; ++i ));
 do
   file=""
+  idx=""
 
   if [ "$i" -lt "10" ];
   then
-    file="_0${i}"
+    idx="0${i}"
   else
-    file="_${i}"
+    idx="${i}"
   fi
 
-  curl "${website}${page_path}${file}.mp3" -o "${page_dir}${i}.mp3" &
+  file="_${idx}"
+  curl "${website}${page_path}${file}.mp3" -o "${page_dir}${idx}.mp3" &
+done
+
+wait
+
+# clean up extra fetch content
+for file in $(ls $page_dir);
+do
+  filetype=$(file -b ${page_dir}${file} | sed 's/,.*//g')
+  if [ "$filetype" == "HTML document" ];
+  then
+    rm ${page_dir}${file} &
+  fi
 done
 
 wait
