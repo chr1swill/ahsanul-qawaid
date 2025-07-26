@@ -26,56 +26,68 @@ type Section struct {
 
 func main() {
 	var err error;
+	var b []byte;
+	var f *os.File;
 	var mux *http.ServeMux;
-	var t *template.Template;
 	var sections []Section;
+	var t *template.Template;
 
 	sections = append(sections, 
-		Section{Letters: ARA_ALPHA, Name: "1", Vowel: ""});
+	Section{Letters: ARA_ALPHA, Name: "1", Vowel: ""});
 	sections = append(sections, 
-		Section{Letters: ARA_ALPHA, Name: "11", Vowel: "َ",
-    Words: []string{"اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ",
-    "رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ",
-    "كَسَبَ", "وَجَدَ"}});
-  sections = append(sections, 
-		Section{Letters: ARA_ALPHA, Name: "12", Vowel: "ِ",
-    Words: []string{"اَذِنَ", "بَقِيَ", "حَمِدَ", "خَشِيَ", "سَخِرَ", "شَرِبَ",
-    "عَجِبَ", "غَضِبَ", "كَذِبَ", "بَخِلَ", "فَلِمَ", "يَءِسَ", "اَبَتِ",
-    "بَلَدِ", "مَلِكِ", "حَطَبِ", "اِبِلِ", "كِبَرِ", "عَلِمَ", "اِرَمَ"}});
-  sections = append(sections,
-    Section{Letters: ARA_ALPHA, Name: "13", Vowel: "ُ",
-    Words: []string{ "جُعِلَ", "خُلِقَ", "ذُكِرَ", "سُءِلَ", "ظُلِمَ",
-    "مُنِعَ", "لُعِنَ", "هُدِيَ", "وُجِدَ", "سُقِطَ", "عُفِيَ", "حُشِرَ", "حُبُكِ",
-    "صُحُفِ", "اُذُنِ", "رُبُعُ", "اَعِضُ", "تَزِرُ", "يَرِتُ", "يَعِدُ" }});
-  sections = append(sections,
-    Section{Name: "14", Words: []string{"هُوَ", "لَكَ", "هِيَ",
-    "بِكَ", "تَرَ", "لِمَ", "مَعَ", "خَلَقَ", "وَقَبَ", "حَسَدَ", "كَسَبَ",
-    "قَدَرَ", "وَهَبَ", "صَدَقَ", "شَرَحَ", "فَرَضَ", "وَلَدَ", "قُدِرَ", "هُدِيَ",
-    "نَفِخَ", "خُلِقَ", "غُفِرَ", "ضُرِبَ", "وُعِدَ", "كُتِبَ", "يَضَعُ", "قُضِيَ",
-    "رَضِيَ", "سَمِعَ", "نَسِيَ", "بَخِلَ", "غَشِيَ", "لَبِتَ", "وَلِيَ", "اَقِيَ",
-    "يَدِيَ", "تَبِعَ", "اَهُوَ", "اُخَرَ", "عُقَدِ", "اُفُقِ", "رُسُلُ", "وَجَدَكَ",
-    "عَدَلَكَ", "خَلَقَكَ", "بِيَدِكَ" }});
+	Section{Letters: ARA_ALPHA, Name: "11", Vowel: "َ",
+	Words: []string{"اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ",
+	"رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ",
+	"كَسَبَ", "وَجَدَ"}});
+	sections = append(sections, 
+	Section{Letters: ARA_ALPHA, Name: "12", Vowel: "ِ",
+	Words: []string{"اَذِنَ", "بَقِيَ", "حَمِدَ", "خَشِيَ", "سَخِرَ", "شَرِبَ",
+	"عَجِبَ", "غَضِبَ", "كَذِبَ", "بَخِلَ", "فَلِمَ", "يَءِسَ", "اَبَتِ",
+	"بَلَدِ", "مَلِكِ", "حَطَبِ", "اِبِلِ", "كِبَرِ", "عَلِمَ", "اِرَمَ"}});
+	sections = append(sections,
+	Section{Letters: ARA_ALPHA, Name: "13", Vowel: "ُ",
+	Words: []string{ "جُعِلَ", "خُلِقَ", "ذُكِرَ", "سُءِلَ", "ظُلِمَ",
+	"مُنِعَ", "لُعِنَ", "هُدِيَ", "وُجِدَ", "سُقِطَ", "عُفِيَ", "حُشِرَ", "حُبُكِ",
+	"صُحُفِ", "اُذُنِ", "رُبُعُ", "اَعِضُ", "تَزِرُ", "يَرِتُ", "يَعِدُ" }});
+	sections = append(sections,
+	Section{Name: "14", Words: []string{"هُوَ", "لَكَ", "هِيَ",
+	"بِكَ", "تَرَ", "لِمَ", "مَعَ", "خَلَقَ", "وَقَبَ", "حَسَدَ", "كَسَبَ",
+	"قَدَرَ", "وَهَبَ", "صَدَقَ", "شَرَحَ", "فَرَضَ", "وَلَدَ", "قُدِرَ", "هُدِيَ",
+	"نَفِخَ", "خُلِقَ", "غُفِرَ", "ضُرِبَ", "وُعِدَ", "كُتِبَ", "يَضَعُ", "قُضِيَ",
+	"رَضِيَ", "سَمِعَ", "نَسِيَ", "بَخِلَ", "غَشِيَ", "لَبِتَ", "وَلِيَ", "اَقِيَ",
+	"يَدِيَ", "تَبِعَ", "اَهُوَ", "اُخَرَ", "عُقَدِ", "اُفُقِ", "رُسُلُ", "وَجَدَكَ",
+	"عَدَلَكَ", "خَلَقَكَ", "بِيَدِكَ" }});
 
-  t = template.Must(template.New("index.html").Funcs(template.FuncMap{
-        "Add": func (a, b int) int { return a + b },
-        }).ParseFiles("src/html/index.html"));
+	t = template.Must(template.New("index.tmpl").Funcs(template.FuncMap{
+		"Add": func (a, b int) int { return a + b },
+	}).ParseFiles("src/html/index.tmpl"));
+
+	f, err = os.Create("src/html/index.html");
+	blowup_if_present(err);
+	defer f.Close();
+
+	err = t.Execute(f, sections);
+	blowup_if_present(err);
+
+	_, err = f.Write(b);
+	blowup_if_present(err);
 
   mux = http.NewServeMux();
 
-  mux.Handle("/audio/",
-      http.StripPrefix("/audio/",
-        http.FileServer(http.Dir("audio"))));
+	mux.Handle("/audio/",
+	http.StripPrefix("/audio/",
+	http.FileServer(http.Dir("audio"))));
 
-  mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    if r.Method != http.MethodGet {
-      http.Error(w,
-          "Method not allowed", http.StatusMethodNotAllowed);
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w,
+			"Method not allowed", http.StatusMethodNotAllowed);
     }
 
-    err = t.Execute(w, sections);
-    if err != nil {
-      http.Error(w,
-          "Internal Server Error", http.StatusInternalServerError);
+		_, err = w.Write(b);
+		if err != nil {
+			http.Error(w,
+			"Internal Server Error", http.StatusInternalServerError);
     }
   });
 
