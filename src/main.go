@@ -3,6 +3,7 @@ package main
 import  (
   "net/http"
 	"html/template"
+	"os"
 )
 
 const (
@@ -25,9 +26,11 @@ type Section struct {
 }
 
 func main() {
-	var err error;
+	var sz int64;
 	var b []byte;
+	var err error;
 	var f *os.File;
+	var fi os.FileInfo;
 	var mux *http.ServeMux;
 	var sections []Section;
 	var t *template.Template;
@@ -39,7 +42,7 @@ func main() {
 	Words: []string{"اَمَرَ", "بَلَغَ", "ثَمَرَ", "جَمَعَ", "حَسَدَ", "ذَكَرَ",
 	"رَفَعَ", "زَعَمَ", "سَرَقَ", "صَدَقَ", "ضَرَبَ", "ظَلَمَ", "عَدَلَ", "قَمَرَ",
 	"كَسَبَ", "وَجَدَ"}});
-	sections = append(sections, 
+	sections = append(sections,
 	Section{Letters: ARA_ALPHA, Name: "12", Vowel: "ِ",
 	Words: []string{"اَذِنَ", "بَقِيَ", "حَمِدَ", "خَشِيَ", "سَخِرَ", "شَرِبَ",
 	"عَجِبَ", "غَضِبَ", "كَذِبَ", "بَخِلَ", "فَلِمَ", "يَءِسَ", "اَبَتِ",
@@ -69,7 +72,14 @@ func main() {
 	err = t.Execute(f, sections);
 	blowup_if_present(err);
 
-	_, err = f.Write(b);
+	_, err = f.Seek(0, 0);
+	blowup_if_present(err);
+	fi, err = f.Stat();
+	blowup_if_present(err);
+
+	sz = fi.Size();
+	b = make([]byte, sz);
+	_, err = f.Read(b);
 	blowup_if_present(err);
 
   mux = http.NewServeMux();
@@ -88,7 +98,7 @@ func main() {
 		if err != nil {
 			http.Error(w,
 			"Internal Server Error", http.StatusInternalServerError);
-    }
+		}
   });
 
   print("server running on port", PORT);
