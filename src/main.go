@@ -26,7 +26,6 @@ type Section struct {
 }
 
 func main() {
-	var sz int64;
 	var b []byte;
 	var err error;
 	var f *os.File;
@@ -77,8 +76,7 @@ func main() {
 	fi, err = f.Stat();
 	blowup_if_present(err);
 
-	sz = fi.Size();
-	b = make([]byte, sz);
+	b = make([]byte, fi.Size());
 	_, err = f.Read(b);
 	blowup_if_present(err);
 
