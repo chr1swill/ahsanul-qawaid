@@ -81,9 +81,17 @@
   let section_idx;
   const LS_KEY = "SECTION_STATE";
   const VISIBILILY_ATTR = {{- $VISIBILILY_ATTR -}};
+  const N_COLS = {{- $N_COLS -}};
   const PAGE_IDX_MIN = 0;
   const PAGE_IDX_MAX = {{- len . -}} - 1;
   const page_ids = [ {{- range . -}}{{- .Name -}},{{- end -}} ];
+  const enum_keys = Object.freeze({
+    down: "ArrowDown", up: "ArrowUp",
+    left: "ArrowLeft", right: "ArrowRight",
+    n: "n", p: "p", j: "j", k: "k", h: "h", l: "l"});
+  const focus_options = Object.freeze({
+    focusVisible: true, preventScroll: true });
+
 
   function update_sections_in_dom(section_idx) {
     let last, cur;
@@ -96,6 +104,7 @@
     if (last !== null) last.removeAttribute(VISIBILILY_ATTR);
     cur.setAttribute(VISIBILILY_ATTR, "");
   }
+
 
   function page_ids_get_idx_after_command(section_idx, command) {
     if (section_idx === null ||
@@ -123,6 +132,7 @@
     }
   }
 
+
   section_idx = window.localStorage.getItem(LS_KEY);
   if (section_idx === null) {
     section_idx = PAGE_IDX_MIN;
@@ -148,13 +158,6 @@
     }
   }
 
-  const enum_keys = Object.freeze({
-    down: "ArrowDown", up: "ArrowUp",
-    left: "ArrowLeft", right: "ArrowRight",
-    n: "n", p: "p", j: "j", k: "k", h: "h", l: "l"});
-  const focus_options = Object.freeze({
-    focusVisible: true, preventScroll: true });
-
   document.body.onkeydown = function (e) {
     if (e.key === enum_keys.n) {
       document.getElementById("nav_next").click();
@@ -167,7 +170,8 @@
     if (e.target.tagName !== "BUTTON") {
       console.assert(e.target.tagName === "BODY");
       e.target
-      .querySelector(`section[${VISIBILILY_ATTR}] li:first-of-type button`)
+      .querySelector(
+	`section[${VISIBILILY_ATTR}] li:first-of-type button`)
       .focus(focus_options);
       return;
     }
@@ -178,52 +182,44 @@
       case enum_keys.up:
 	arr = Array.from(e.target.parentElement.parentElement.children); 
 	idx = arr.indexOf(e.target.parentElement);
-	if (idx - {{ $N_COLS }} < 0) {
-	  arr[(arr.length - 1) - (idx % {{ $N_COLS -}})]
-	    .firstElementChild
-	    .focus(focus_options);
+	if (idx - N_COLS < 0) {
+	  arr[(arr.length - 1) - (idx % N_COLS)]
+	    .firstElementChild.focus(focus_options);
 	} else {
-	  arr[idx - {{ $N_COLS -}}]
-	    .firstElementChild
-	    .focus(focus_options);
+	  arr[idx - N_COLS].firstElementChild.focus(focus_options);
 	}
 	break;
       case enum_keys.j:
       case enum_keys.down: 
 	arr = Array.from(e.target.parentElement.parentElement.children); 
 	idx = arr.indexOf(e.target.parentElement);
-	if (idx + {{ $N_COLS }} > arr.length - 1) {
-	  arr[idx % {{ $N_COLS -}}]
-	    .firstElementChild
-	    .focus(focus_options);
+	if (idx + N_COLS > arr.length - 1) {
+	  arr[idx % N_COLS].firstElementChild.focus(focus_options);
 	} else {
-	  arr[idx + {{ $N_COLS -}}]
-	    .firstElementChild
-	    .focus(focus_options);
+	  arr[idx + N_COLS].firstElementChild.focus(focus_options);
 	}
 	break;
       case enum_keys.h:
       case enum_keys.left:
-	check = e.target
-	  .parentElement.nextElementSibling;
+	check = e.target.parentElement.nextElementSibling;
 	if (check !== null) {
 	  check.firstElementChild.focus(focus_options);
 	} else {
 	  document.body
-	  .querySelector(`section[${VISIBILILY_ATTR}] li:first-of-type button`)
+	  .querySelector(
+	    `section[${VISIBILILY_ATTR}] li:first-of-type button`)
 	  .focus(focus_options);
 	}
 	break;
       case enum_keys.l:
       case enum_keys.right:
-      check = e.target
-	.parentElement
-	.previousElementSibling;
+      check = e.target.parentElement.previousElementSibling;
 	if (check !== null) {
 	  check.firstElementChild.focus(focus_options);
 	} else {
 	  document.body
-	  .querySelector(`section[${VISIBILILY_ATTR}] li:last-of-type button`)
+	  .querySelector(
+	    `section[${VISIBILILY_ATTR}] li:last-of-type button`)
 	  .focus(focus_options);
 	}
 	break;
