@@ -159,7 +159,7 @@
   const enum_keys = Object.freeze({
     down: "ArrowDown", up: "ArrowUp",
     left: "ArrowLeft", right: "ArrowRight",
-    n: "n", p: "p", j: "j", k: "k", h: "h", l: "l"});
+    n: "n", b: "b", p: "p", j: "j", k: "k", h: "h", l: "l"});
   const focus_options = Object.freeze({
     focusVisible: true, preventScroll: true });
 
@@ -235,7 +235,7 @@
     if (e.key === enum_keys.n) {
       document.getElementById("nav_next").click();
       return;
-    } else if (e.key === enum_keys.p) {
+    } else if (e.key === enum_keys.p || enum_keys.b) {
       document.getElementById("nav_back").click();
       return;
     }
