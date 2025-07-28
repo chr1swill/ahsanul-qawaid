@@ -28,8 +28,8 @@ type Section struct {
 type Keymap struct {
 	Key         rune
 	Description string
-	// Handler  string(js code used to implement description
-	//                when in response to key being pressed)
+	// Handler  string // (js code used to implement description
+	//                 // when in response to key being pressed)
 }
 
 func main() {
@@ -71,11 +71,20 @@ func main() {
 		"Add": func (a, b int) int { return a + b },
 	}).ParseFiles("src/tmpl/index.tmpl"));
 
+	if _, err = os.Stat("src/html/"); err != nil {
+		err = os.MkdirAll("src/html/", 0777);
+		blowup_if_present(err);
+	}
+
 	f, err = os.Create("src/html/index.html");
 	blowup_if_present(err);
 	defer f.Close();
 
-	err = t.Execute(f, sections);
+	err = t.Execute(f, struct{
+		Sections []Section;
+		Keymaps []Keymap; }{
+		Sections: sections,
+		Keymaps: nil });
 	blowup_if_present(err);
 
 	_, err = f.Seek(0, 0);

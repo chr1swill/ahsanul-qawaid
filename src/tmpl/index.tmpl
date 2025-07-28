@@ -21,7 +21,7 @@
 </head>
 <body>
 <h1>Ahsanul Qawaid<sup>[?]</sup></h1>
-{{- range . -}}
+{{- range .Sections -}}
 <section id="{{- .Name -}}">
   <h2 id="{{- .Name -}}_title">Page {{ .Name -}}</h2>
   {{- $last := 0 -}}
@@ -83,8 +83,8 @@
   const VISIBILILY_ATTR = {{- $VISIBILILY_ATTR -}};
   const N_COLS = {{- $N_COLS -}};
   const PAGE_IDX_MIN = 0;
-  const PAGE_IDX_MAX = {{- len . -}} - 1;
-  const page_ids = [ {{- range . -}}{{- .Name -}},{{- end -}} ];
+  const PAGE_IDX_MAX = {{- len .Sections -}} - 1;
+  const page_ids = [ {{- range .Sections -}}{{- .Name -}},{{- end -}} ];
   const enum_keys = Object.freeze({
     down: "ArrowDown", up: "ArrowUp",
     left: "ArrowLeft", right: "ArrowRight",
