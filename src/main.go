@@ -25,6 +25,13 @@ type Section struct {
 	Name 		string
 }
 
+type Keymap struct {
+	Key         rune
+	Description string
+	// Handler  string(js code used to implement description
+	//                when in response to key being pressed)
+}
+
 func main() {
 	var b []byte;
 	var err error;
@@ -62,7 +69,7 @@ func main() {
 
 	t = template.Must(template.New("index.tmpl").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b },
-	}).ParseFiles("src/html/index.tmpl"));
+	}).ParseFiles("src/tmpl/index.tmpl"));
 
 	f, err = os.Create("src/html/index.html");
 	blowup_if_present(err);
