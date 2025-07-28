@@ -1,2 +1,3 @@
-*.swp
+src/html/
 bin/
+*.swp
