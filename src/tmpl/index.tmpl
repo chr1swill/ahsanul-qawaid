@@ -20,7 +20,7 @@
   </style>
 </head>
 <body>
-<h1>Ahsanul Qawaid</h1>
+<h1>Ahsanul Qawaid<sup>[?]</sup></h1>
 {{- range . -}}
 <section id="{{- .Name -}}">
   <h2 id="{{- .Name -}}_title">Page {{ .Name -}}</h2>
@@ -164,7 +164,7 @@
     if (e.key === enum_keys.n) {
       document.getElementById("nav_next").click();
       return;
-    } else if (e.key === enum_keys.p || enum_keys.b) {
+    } else if (e.key === enum_keys.p || e.key === enum_keys.b) {
       document.getElementById("nav_back").click();
       return;
     }
@@ -179,53 +179,53 @@
     }
 
     let check, arr, idx; 
-    switch(e.key) {
-      case enum_keys.k:
-      case enum_keys.up:
-	arr = Array.from(e.target.parentElement.parentElement.children); 
-	idx = arr.indexOf(e.target.parentElement);
-	if (idx - N_COLS < 0) {
-	  arr[(arr.length - 1) - (idx % N_COLS)]
-	    .firstElementChild.focus(focus_options);
-	} else {
-	  arr[idx - N_COLS].firstElementChild.focus(focus_options);
-	}
-	break;
-      case enum_keys.j:
-      case enum_keys.down: 
-	arr = Array.from(e.target.parentElement.parentElement.children); 
-	idx = arr.indexOf(e.target.parentElement);
-	if (idx + N_COLS > arr.length - 1) {
-	  arr[idx % N_COLS].firstElementChild.focus(focus_options);
-	} else {
-	  arr[idx + N_COLS].firstElementChild.focus(focus_options);
-	}
-	break;
-      case enum_keys.h:
-      case enum_keys.left:
-	check = e.target.parentElement.nextElementSibling;
-	if (check !== null) {
-	  check.firstElementChild.focus(focus_options);
-	} else {
-	  document.body
-	  .querySelector(
-	    `section[${VISIBILILY_ATTR}] li:first-of-type button`)
-	  .focus(focus_options);
-	}
-	break;
-      case enum_keys.l:
-      case enum_keys.right:
-      check = e.target.parentElement.previousElementSibling;
-	if (check !== null) {
-	  check.firstElementChild.focus(focus_options);
-	} else {
-	  document.body
-	  .querySelector(
-	    `section[${VISIBILILY_ATTR}] li:last-of-type button`)
-	  .focus(focus_options);
-	}
-	break;
-    }
+		switch(e.key) {
+			case enum_keys.k:
+			case enum_keys.up:
+				arr = Array.from(e.target.parentElement.parentElement.children); 
+				idx = arr.indexOf(e.target.parentElement);
+				if (idx - N_COLS < 0) {
+					arr[(arr.length - 1) - (idx % N_COLS)]
+						.firstElementChild.focus(focus_options);
+				} else {
+					arr[idx - N_COLS].firstElementChild.focus(focus_options);
+				}
+				break;
+			case enum_keys.j:
+			case enum_keys.down: 
+				arr = Array.from(e.target.parentElement.parentElement.children); 
+				idx = arr.indexOf(e.target.parentElement);
+				if (idx + N_COLS > arr.length - 1) {
+					arr[idx % N_COLS].firstElementChild.focus(focus_options);
+				} else {
+					arr[idx + N_COLS].firstElementChild.focus(focus_options);
+				}
+				break;
+			case enum_keys.h:
+			case enum_keys.left:
+				check = e.target.parentElement.nextElementSibling;
+				if (check !== null) {
+					check.firstElementChild.focus(focus_options);
+				} else {
+					document.body
+						.querySelector(
+								`section[${VISIBILILY_ATTR}] li:first-of-type button`)
+						.focus(focus_options);
+				}
+				break;
+			case enum_keys.l:
+			case enum_keys.right:
+				check = e.target.parentElement.previousElementSibling;
+				if (check !== null) {
+					check.firstElementChild.focus(focus_options);
+				} else {
+					document.body
+						.querySelector(
+								`section[${VISIBILILY_ATTR}] li:last-of-type button`)
+						.focus(focus_options);
+				}
+				break;
+		}
   }
 </script>
 </body>

@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-<h1>Ahsanul Qawaid</h1><section id="1">
+<h1>Ahsanul Qawaid<sup>[?]</sup></h1><section id="1">
   <h2 id="1_title">Page 1</h2><article>
     <h3>Letters:</h3>
     <ul id="1_letters"><li><button>ا</button><audio src='/audio/1/01.mp3'></audio></li><li><button>ب</button><audio src='/audio/1/02.mp3'></audio></li><li><button>ت</button><audio src='/audio/1/03.mp3'></audio></li><li><button>ث</button><audio src='/audio/1/04.mp3'></audio></li><li><button>ج</button><audio src='/audio/1/05.mp3'></audio></li><li><button>ح</button><audio src='/audio/1/06.mp3'></audio></li><li><button>خ</button><audio src='/audio/1/07.mp3'></audio></li><li><button>د</button><audio src='/audio/1/08.mp3'></audio></li><li><button>ذ</button><audio src='/audio/1/09.mp3'></audio></li><li><button>ر</button><audio src='/audio/1/10.mp3'></audio></li><li><button>ز</button><audio src='/audio/1/11.mp3'></audio></li><li><button>س</button><audio src='/audio/1/12.mp3'></audio></li><li><button>ش</button><audio src='/audio/1/13.mp3'></audio></li><li><button>ص</button><audio src='/audio/1/14.mp3'></audio></li><li><button>ض</button><audio src='/audio/1/15.mp3'></audio></li><li><button>ط</button><audio src='/audio/1/16.mp3'></audio></li><li><button>ظ</button><audio src='/audio/1/17.mp3'></audio></li><li><button>ع</button><audio src='/audio/1/18.mp3'></audio></li><li><button>غ</button><audio src='/audio/1/19.mp3'></audio></li><li><button>ف</button><audio src='/audio/1/20.mp3'></audio></li><li><button>ق</button><audio src='/audio/1/21.mp3'></audio></li><li><button>ك</button><audio src='/audio/1/22.mp3'></audio></li><li><button>ل</button><audio src='/audio/1/23.mp3'></audio></li><li><button>م</button><audio src='/audio/1/24.mp3'></audio></li><li><button>ن</button><audio src='/audio/1/25.mp3'></audio></li><li><button>و</button><audio src='/audio/1/26.mp3'></audio></li><li><button>ه</button><audio src='/audio/1/27.mp3'></audio></li><li><button>ء</button><audio src='/audio/1/28.mp3'></audio></li><li><button>ي</button><audio src='/audio/1/29.mp3'></audio></li></ul>
@@ -235,7 +235,7 @@
     if (e.key === enum_keys.n) {
       document.getElementById("nav_next").click();
       return;
-    } else if (e.key === enum_keys.p || enum_keys.b) {
+    } else if (e.key === enum_keys.p || e.key === enum_keys.b) {
       document.getElementById("nav_back").click();
       return;
     }
@@ -250,53 +250,53 @@
     }
 
     let check, arr, idx; 
-    switch(e.key) {
-      case enum_keys.k:
-      case enum_keys.up:
-	arr = Array.from(e.target.parentElement.parentElement.children); 
-	idx = arr.indexOf(e.target.parentElement);
-	if (idx - N_COLS < 0) {
-	  arr[(arr.length - 1) - (idx % N_COLS)]
-	    .firstElementChild.focus(focus_options);
-	} else {
-	  arr[idx - N_COLS].firstElementChild.focus(focus_options);
-	}
-	break;
-      case enum_keys.j:
-      case enum_keys.down: 
-	arr = Array.from(e.target.parentElement.parentElement.children); 
-	idx = arr.indexOf(e.target.parentElement);
-	if (idx + N_COLS > arr.length - 1) {
-	  arr[idx % N_COLS].firstElementChild.focus(focus_options);
-	} else {
-	  arr[idx + N_COLS].firstElementChild.focus(focus_options);
-	}
-	break;
-      case enum_keys.h:
-      case enum_keys.left:
-	check = e.target.parentElement.nextElementSibling;
-	if (check !== null) {
-	  check.firstElementChild.focus(focus_options);
-	} else {
-	  document.body
-	  .querySelector(
-	    `section[${VISIBILILY_ATTR}] li:first-of-type button`)
-	  .focus(focus_options);
-	}
-	break;
-      case enum_keys.l:
-      case enum_keys.right:
-      check = e.target.parentElement.previousElementSibling;
-	if (check !== null) {
-	  check.firstElementChild.focus(focus_options);
-	} else {
-	  document.body
-	  .querySelector(
-	    `section[${VISIBILILY_ATTR}] li:last-of-type button`)
-	  .focus(focus_options);
-	}
-	break;
-    }
+		switch(e.key) {
+			case enum_keys.k:
+			case enum_keys.up:
+				arr = Array.from(e.target.parentElement.parentElement.children); 
+				idx = arr.indexOf(e.target.parentElement);
+				if (idx - N_COLS < 0) {
+					arr[(arr.length - 1) - (idx % N_COLS)]
+						.firstElementChild.focus(focus_options);
+				} else {
+					arr[idx - N_COLS].firstElementChild.focus(focus_options);
+				}
+				break;
+			case enum_keys.j:
+			case enum_keys.down: 
+				arr = Array.from(e.target.parentElement.parentElement.children); 
+				idx = arr.indexOf(e.target.parentElement);
+				if (idx + N_COLS > arr.length - 1) {
+					arr[idx % N_COLS].firstElementChild.focus(focus_options);
+				} else {
+					arr[idx + N_COLS].firstElementChild.focus(focus_options);
+				}
+				break;
+			case enum_keys.h:
+			case enum_keys.left:
+				check = e.target.parentElement.nextElementSibling;
+				if (check !== null) {
+					check.firstElementChild.focus(focus_options);
+				} else {
+					document.body
+						.querySelector(
+								`section[${VISIBILILY_ATTR}] li:first-of-type button`)
+						.focus(focus_options);
+				}
+				break;
+			case enum_keys.l:
+			case enum_keys.right:
+				check = e.target.parentElement.previousElementSibling;
+				if (check !== null) {
+					check.firstElementChild.focus(focus_options);
+				} else {
+					document.body
+						.querySelector(
+								`section[${VISIBILILY_ATTR}] li:last-of-type button`)
+						.focus(focus_options);
+				}
+				break;
+		}
   }
 </script>
 </body>
