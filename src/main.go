@@ -82,7 +82,8 @@ func main() {
 
 	err = t.Execute(f, struct{
 		Sections []Section;
-		Keymaps []Keymap; }{
+		Keymaps []Keymap;
+	}{
 		Sections: sections,
 		Keymaps: nil });
 	blowup_if_present(err);
