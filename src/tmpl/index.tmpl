@@ -27,22 +27,20 @@
 	<ul class="keymap_info">
 		{{- range .Keymaps -}}
 		<li>
-			{{- $namelen := len .Names -}}
-		  {{- if lt $namelen 2 -}}
-			<span>{{- range .Names -}} {{- . -}} {{- end -}}</span>
-			{{- else -}}
-			<span>
+			<p>
+			<strong>
+        {{- $namelen := len .Names -}}
 				{{- $finalidx := Sub $namelen 1 -}}
 			  {{- range $i, $v := .Names -}}
 			    {{- if eq $finalidx $i -}}
-				    {{ $v -}}
+						{{ printf "%s " $v }}
 				  {{- else -}}
-				    {{ printf "%s or" $v }}
+				    {{ printf "%s or " $v }}
 				  {{- end -}}
 				{{- end -}}
-			</span>
-			{{- end -}}
-			<p>{{- .Description -}}</p>
+			</strong>
+			{{ printf "- %s" .Description -}}
+			</p>
 		</li>
 		{{- end -}}
 	</ul>
