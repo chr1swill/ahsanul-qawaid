@@ -23,28 +23,29 @@
 <body>
 <div>
   <h1>Ahsanul Qawaid</h1>
-	<!--<sup>[?]</sup>
+	<sup>[?]</sup>
 	<ul class="keymap_info">
 		{{- range .Keymaps -}}
 		<li>
-			{{- $namelen := len .Name -}}
-		  {{- if eq $namelen 1 -}}
-			<span>{{- range .Name -}}{{- . -}}{{- end -}}</span>
+			{{- $namelen := len .Names -}}
+		  {{- if lt $namelen 2 -}}
+			<span>{{- range .Names -}} {{- . -}} {{- end -}}</span>
 			{{- else -}}
 			<span>
-				{{- $finalidx := call Sub $namelen 1 -}}
-			  {{- range $i, $v := .Name -}}
-			  {{- if not eq $finalidx $i -}}
-					{{ printf "%s or" $v }}
-				{{- else -}}
-					{{ $v -}}
+				{{- $finalidx := Sub $namelen 1 -}}
+			  {{- range $i, $v := .Names -}}
+			    {{- if eq $finalidx $i -}}
+				    {{ $v -}}
+				  {{- else -}}
+				    {{ printf "%s or" $v }}
+				  {{- end -}}
 				{{- end -}}
 			</span>
 			{{- end -}}
 			<p>{{- .Description -}}</p>
 		</li>
 		{{- end -}}
-	</ul>-->
+	</ul>
 </div>
 {{- range .Sections -}}
 <section id="{{- .Name -}}">
