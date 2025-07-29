@@ -4,6 +4,7 @@ import  (
   "net/http"
 	"html/template"
 	"os"
+	"log"
 )
 
 const (
@@ -26,7 +27,7 @@ type Section struct {
 }
 
 type Keymap struct {
-	Keynames    []string // most keymaps have mulitple keys
+	Names    []string // most keymaps have mulitple keys
 	Description string
 	// Handler  string // (js code used to implement description
 	//                 // when in response to key being pressed)
@@ -67,9 +68,11 @@ func main() {
 	"يَدِيَ", "تَبِعَ", "اَهُوَ", "اُخَرَ", "عُقَدِ", "اُفُقِ", "رُسُلُ", "وَجَدَكَ",
 	"عَدَلَكَ", "خَلَقَكَ", "بِيَدِكَ" }});
 
-	t = template.Must(template.New("index.tmpl").Funcs(template.FuncMap{
+	t, err = template.New("index.tmpl").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b },
-	}).ParseFiles("src/tmpl/index.tmpl"));
+		"Sub": func (a, b int) int { return a - b },
+	}).ParseFiles("src/tmpl/index.tmpl");
+	if err != nil { log.Fatal(err); }
 
 	if _, err = os.Stat("src/html/"); err != nil {
 		err = os.MkdirAll("src/html/", 0777);
@@ -90,17 +93,17 @@ func main() {
 	}{
 	Sections: sections,
 	Keymaps:  []Keymap{
-		{Keyname: []string{"ArrowDown", "j"},
+		{Names: []string{"ArrowDown", "j"},
 		Description: "Move letter selection down"},
-		{Keyname: []string{"ArrowUp", "k"},
+		{Names: []string{"ArrowUp", "k"},
 		Description: "Move letter selection up"},
-		{Keyname: []string{"ArrowLeft", "l"},
+		{Names: []string{"ArrowLeft", "l"},
 		Description: "Move letter selection left"},
-		{Keyname: []string{"ArrowRight", "h"},
+		{Names: []string{"ArrowRight", "h"},
 		Description: "Move letter selection right"},
-		{Keyname: []string{"n"},
+		{Names: []string{"n"},
 		Description: "Cycle forward a page"},
-		{Keyname: []string{"b"},
+		{Names: []string{"b"},
 		Description: "Cycle back a page"},
 	}});
 	blowup_if_present(err);
