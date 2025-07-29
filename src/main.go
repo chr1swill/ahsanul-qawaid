@@ -83,19 +83,25 @@ func main() {
 	// down: "ArrowDown", up: "ArrowUp",
 	// left: "ArrowLeft", right: "ArrowRight",
 	// n: "n", b: "b", j: "j", k: "k", h: "h", l: "l"});
-	err = t.Execute(f, struct{
-		Sections  []Section; Keymaps  []Keymap;
-	}{Sections: sections,  Keymaps: []Keymap{
-		{Keyname: "ArrowDown",  Description: "Move letter selection down"}, 
-		{Keyname: "ArrowUp",    Description: "Move letter selection up"}, 
-		{Keyname: "ArrowLeft",  Description: "Move letter selection left"}, 
-		{Keyname: "ArrowRight", Description: "Move letter selection right"}, 
-		{Keyname: "j",          Description: "Move letter selection down"}, 
-		{Keyname: "k",          Description: "Move letter selection up"}, 
-		{Keyname: "h",          Description: "Move letter selection left"}, 
-		{Keyname: "l",          Description: "Move letter selection right"}, 
-		{Keyname: "n",          Description: "Cycle forward a page"}, 
-		{Keyname: "b",          Description: "Cycle back a page"}, 
+	err = t.Execute(f,
+	struct{
+		Sections []Section;
+		Keymaps []Keymap;
+	}{
+	Sections: sections,
+	Keymaps:  []Keymap{
+		{Keyname: []string{"ArrowDown", "j"},
+		Description: "Move letter selection down"},
+		{Keyname: []string{"ArrowUp", "k"},
+		Description: "Move letter selection up"},
+		{Keyname: []string{"ArrowLeft", "l"},
+		Description: "Move letter selection left"},
+		{Keyname: []string{"ArrowRight", "h"},
+		Description: "Move letter selection right"},
+		{Keyname: []string{"n"},
+		Description: "Cycle forward a page"},
+		{Keyname: []string{"b"},
+		Description: "Cycle back a page"},
 	}});
 	blowup_if_present(err);
 
