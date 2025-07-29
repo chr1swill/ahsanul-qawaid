@@ -26,7 +26,7 @@ type Section struct {
 }
 
 type Keymap struct {
-	Key         rune
+	Keynames    []string // most keymaps have mulitple keys
 	Description string
 	// Handler  string // (js code used to implement description
 	//                 // when in response to key being pressed)
@@ -80,12 +80,23 @@ func main() {
 	blowup_if_present(err);
 	defer f.Close();
 
+	// down: "ArrowDown", up: "ArrowUp",
+	// left: "ArrowLeft", right: "ArrowRight",
+	// n: "n", b: "b", j: "j", k: "k", h: "h", l: "l"});
 	err = t.Execute(f, struct{
-		Sections []Section;
-		Keymaps []Keymap;
-	}{
-		Sections: sections,
-		Keymaps: nil });
+		Sections  []Section; Keymaps  []Keymap;
+	}{Sections: sections,  Keymaps: []Keymap{
+		{Keyname: "ArrowDown",  Description: "Move letter selection down"}, 
+		{Keyname: "ArrowUp",    Description: "Move letter selection up"}, 
+		{Keyname: "ArrowLeft",  Description: "Move letter selection left"}, 
+		{Keyname: "ArrowRight", Description: "Move letter selection right"}, 
+		{Keyname: "j",          Description: "Move letter selection down"}, 
+		{Keyname: "k",          Description: "Move letter selection up"}, 
+		{Keyname: "h",          Description: "Move letter selection left"}, 
+		{Keyname: "l",          Description: "Move letter selection right"}, 
+		{Keyname: "n",          Description: "Cycle forward a page"}, 
+		{Keyname: "b",          Description: "Cycle back a page"}, 
+	}});
 	blowup_if_present(err);
 
 	_, err = f.Seek(0, 0);
