@@ -127,10 +127,12 @@
     console.assert(section_idx !== null && section_idx !== undefined);
     console.assert(typeof section_idx === 'number');
 
-    last = document.body.querySelector(`section[${VISIBILILY_ATTR}]`);
-    cur = document.getElementById(page_ids[section_idx]);
-    if (last !== null) last.removeAttribute(VISIBILILY_ATTR);
-    cur.setAttribute(VISIBILILY_ATTR, "");
+		document.body
+			.querySelector(`section[${VISIBILILY_ATTR}]`)
+			?.removeAttribute(VISIBILILY_ATTR);
+
+		document.getElementById(page_ids[section_idx])
+			.setAttribute(VISIBILILY_ATTR, "");
   }
 
 
