@@ -27,10 +27,8 @@ type Section struct {
 }
 
 type Keymap struct {
-	Names    []string // most keymaps have mulitple keys
+	Names       []string // most keymaps have mulitple keys
 	Description string
-	// Handler  string // (js code used to implement description
-	//                 // when in response to key being pressed)
 }
 
 func main() {
