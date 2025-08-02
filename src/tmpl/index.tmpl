@@ -170,11 +170,11 @@
 
 
   document.body.onclick = function (e) {
-    let audio, el = e.target;
+    let el=e.target, audio=el.nextElementSibling;
     if (el.tagName !== "BUTTON") return;
     if (el.parentElement.tagName !== "NAV") {
-      audio=el.nextElementSibling;
-      console.assert(audio.tagName = "AUDIO");
+      console.assert(audio !== null && audio !== undefined);
+      console.assert(audio.tagName === "AUDIO");
       audio.play();
     } else {
       section_idx = window.parseInt(window.localStorage.getItem(LS_KEY));
