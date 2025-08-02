@@ -170,7 +170,7 @@
 
 
   document.body.onclick = function (e) {
-    let el, audio;el=e.target;
+    let audio, el = e.target;
     if (el.tagName !== "BUTTON") return;
     if (el.parentElement.tagName !== "NAV") {
       audio=el.nextElementSibling;
