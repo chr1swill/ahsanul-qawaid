@@ -214,10 +214,19 @@
 			case enum_keys.up:
 				arr = Array.from(e.target.parentElement.parentElement.children); 
 				idx = arr.indexOf(e.target.parentElement);
-				if (idx - N_COLS < 0) {
+				console.log(idx);
+				console.log((arr.length))
+				console.log((arr.length % N_COLS))
+				if (idx >= 0 && idx < (arr.length % N_COLS)) {
+					console.log("here");
+					arr[(arr.length - (arr.length % N_COLS)) + idx]
+						.firstElementChild.focus(focus_options);
+				} else if (idx - N_COLS < 0) {
+					console.log("here1");
 					arr[(arr.length - 1) - (idx % N_COLS)]
 						.firstElementChild.focus(focus_options);
 				} else {
+					console.log("here2");
 					arr[idx - N_COLS].firstElementChild.focus(focus_options);
 				}
 				break;
