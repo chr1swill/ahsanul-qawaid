@@ -195,9 +195,7 @@
     } else if (e.key === enum_keys.b) {
       document.getElementById("nav_back").click();
       return;
-    }
-
-    if (e.target.tagName !== "BUTTON") {
+    } else if (e.target.tagName !== "BUTTON") {
       console.assert(e.target.tagName === "BODY");
       e.target
       .querySelector(
