@@ -98,26 +98,6 @@
      {{- end -}}
     </ul>
   </article>
-  {{/* {{- if .Words -}}
-  <article>
-    <h3>Words:</h3>
-    <ul class="letter_list_container" id="{{- .Name -}}_words">
-      {{- $name := .Name -}}
-      {{- range $i, $v := .Words -}}
-      <li class="flex_center">
-        <button>{{- $v -}}</button>
-        {{- $idx := Add $i 1 -}}
-        {{- $idx := Add $last $idx -}}
-        {{-  if lt $idx 10 -}}
-        <audio src='{{- printf "/audio/%s/0%d.mp3" $name $idx -}}'></audio>
-        {{- else -}}
-        <audio src='{{- printf "/audio/%s/%d.mp3" $name $idx -}}'></audio>
-        {{- end -}}
-      </li>
-      {{- end -}}
-    </ul>
-  </article>
-  {{- end -}} */}}
 </section>
 {{- end -}}
 <nav class="flex_center"><button id="nav_back">Back</button><button id="nav_next">Next</button></nav>
