@@ -52,11 +52,11 @@
 {{- range .Sections -}}
 <section id="{{- .Name -}}">
   <h2 id="{{- .Name -}}_title">Page {{ .Name -}}</h2>
-  {{- $last := 0 -}}
-  {{- if .Letters -}}
   <article>
     <h3>Letters:</h3>
     <ul class="letter_list_container" id="{{- .Name -}}_letters">
+      {{- $last := 0 -}}
+      {{- if .Letters -}}
       {{- $vowel := .Vowel -}}
       {{- $name := .Name -}}
       {{- range $i, $v := .Letters -}}
