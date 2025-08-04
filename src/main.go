@@ -81,9 +81,6 @@ func main() {
 	blowup_if_present(err);
 	defer f.Close();
 
-	// down: "ArrowDown", up: "ArrowUp",
-	// left: "ArrowLeft", right: "ArrowRight",
-	// n: "n", b: "b", j: "j", k: "k", h: "h", l: "l"});
 	err = t.Execute(f,
 	struct{
 		Sections []Section;
