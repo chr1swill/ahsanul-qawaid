@@ -62,7 +62,14 @@
         {{- range $i, $v := .Letters -}}
           <li class="flex_center">
             {{- if $vowel -}}
-              <button>{{- printf "%s%s" $v $vowel -}}</button>
+						  {{- if eq $i 0 -}}
+						    {{- $ok := Compare $name "15" -}}
+						    {{- if $ok -}}
+						      <button>{{ printf "%s%s" $v $vowel  }}</button>
+						    {{- end -}}
+						  {{- else -}}
+							  <button>{{- printf "%s%sا" $v $vowel -}}</button>
+							{{- end -}}
             {{- else -}}
               <button>{{- $v -}}</button>
             {{- end -}}
