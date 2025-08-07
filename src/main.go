@@ -66,7 +66,11 @@ func main() {
 	"يَدِيَ", "تَبِعَ", "اَهُوَ", "اُخَرَ", "عُقَدِ", "اُفُقِ", "رُسُلُ", "وَجَدَكَ",
 	"عَدَلَكَ", "خَلَقَكَ", "بِيَدِكَ" }});
 	sections = append(sections, Section{Name: "15", Vowel: "ََ", // all letter have alif added which is not correct 
-	Letters: ARA_ALPHA, Words: []string{}});                    // e.g. "alif double fatha alif"
+	Letters: ARA_ALPHA, Words: []string{ "اَبَرََا", "رَغَرََا", "طَبَقََا",
+	"جَنَفََا", "مَلِكََا", "مَشَلََا", "عِنَبََا", "قَصَصََا", "لَعِبََا", "شَمَنََا",
+		"اَسِفََا", "قَرَرََا", "اَبَنََا", "كَذِبََا", "شَطَطََا", "كُفُوََا", "لُبَدََا",
+		"سُرُرََا", "مُزُوََا", "رُسُلََا", "عَلَقَتََا", "بَقَرَتََا", "حَسَنَتََا", "نَخِرَتََا", 
+	}});                    // e.g. "alif double fatha alif"
 
 	t, err = template.New("index.tmpl").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b },
