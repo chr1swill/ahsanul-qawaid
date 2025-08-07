@@ -31,21 +31,6 @@ type Keymap struct {
 	Description string
 }
 
-func Compare(a , b string) bool { 
-	var l int;
-	var ok bool;
-
-	if l = len(a); l < len(b) {
-		l = len(b);
-	}
-
-	ok = true;
-	for i := range a { 
-		if a[i] != b[i] { ok=false;break; }
-	}
-	return ok;
-}
-
 func main() {
 	var b []byte;
 	var err error;
@@ -86,7 +71,20 @@ func main() {
 	t, err = template.New("index.tmpl").Funcs(template.FuncMap{
 		"Add": func (a, b int) int { return a + b },
 		"Sub": func (a, b int) int { return a - b },
-		"Compare": Compare,
+		"Compare": func (a , b string) bool { 
+			var l int;
+			var ok bool;
+
+			if l = len(a); l < len(b) {
+				l = len(b);
+			}
+
+			ok = true;
+			for i := range a { 
+				if a[i] != b[i] { ok=false;break; }
+			}
+			return ok;
+		},
 	}).ParseFiles("src/tmpl/index.tmpl");
 	if err != nil { log.Fatal(err); }
 
