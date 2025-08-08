@@ -151,7 +151,7 @@ func main() {
 		}
   });
 
-  print("server running on port", PORT);
+  print("server running on port ", PORT);
   err = http.ListenAndServe(PORT, mux);
   blowup_if_present(err);
 }
